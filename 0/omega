@@ -16,7 +16,7 @@ FoamFile
 
 dimensions      [0 0 -1 0 0 0 0];
 
-internalField   uniform 27.216552697590867; 
+internalField   uniform 4.08248290463863; 
 boundaryField
 {
     Inlet
