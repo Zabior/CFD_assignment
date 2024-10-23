@@ -19,7 +19,7 @@ application     pimpleFoam;
 
 startFrom       startTime;
 
-startTime       600;
+startTime       0;
 
 stopAt          endTime;
 
