@@ -17,21 +17,21 @@ FoamFile
 
 solvers
 {
-    p
+    "(rho|rhoU|rhoE)"
     {
-        solver           GAMG;
-        smoother         DICGaussSeidel;
-        tolerance        1e-6;
-        relTol           0.01;
+        solver          diagonal;
     }
 
-    pFinal
+    U
     {
-        $p;
-        relTol          0;
+        solver          smoothSolver;
+        smoother        GaussSeidel;
+        nSweeps         2;
+        tolerance       1e-05;
+        relTol          0.01;
     }
 
- "(U|k|epsilon|R|nuTilda)"
+ "(U|rho|p|k|epsilon|R|nuTilda)"
     {
         solver          smoothSolver;
         smoother        symGaussSeidel;
@@ -45,46 +45,69 @@ solvers
         relTol          0;
     }
 
-    omega
+    e
     {
-        solver          PBiCGStab;
-        preconditioner  DILU;
-        tolerance       1e-10;
-        relTol          0.1;
-    }
-    omegaFinal
-    {
-        $omega;
+        $U;
+        tolerance       1e-5;
         relTol          0;
     }
-    kFinal
+    eFinal
     {
-        $k;
+        $e;
         relTol          0;
     }
 
+//  p
+//  {
+//      solver           GAMG;
+//      smoother         DICGaussSeidel;
+//      tolerance        1e-5;
+//      relTol           0.01;
+//  }
 
-
-}
-
-relaxationFactors
+pFinal
+    {
+        $p;
+        relTol          0;
+    }
+rhoFinal
+    {
+        $rho;
+        relTol          0;
+    }
+nuTildaFinal
+    {
+        $nuTilda;
+        relTol          0;
+    }
+omega
 {
-    fields
-    {
-        p               0.3;
-    }
-    equations
-    {
-        "(U|k|omega)"   0.7;
-        "(U|k|omega)Final" 1.0;
-    }
+    solver          PBiCGStab;
+    preconditioner  DILU;
+    tolerance       1e-10;
+    relTol          0.1;
 }
+omegaFinal
+{
+    $omega;
+    relTol          0;
+}
+kFinal
+{
+    $k;
+    relTol          0;
+}
+
+
+
+
+}
+
 PIMPLE
 {
+    nOuterCorrectors 1;
+    nCorrectors      2;
     nNonOrthogonalCorrectors 0;
-    nCorrectors         2;
-    pRefCell                 0;
-    pRefValue                0;
 }
 
 

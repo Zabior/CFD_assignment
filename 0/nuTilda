@@ -9,20 +9,21 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volVectorField;
-    object      U;
+    class       volScalarField;
+    object      nuTilda;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 1 -1 0 0 0 0];
+dimensions      [0 2 -1 0 0 0 0];
 
-internalField   uniform (0.15 0 0);
+internalField   uniform 0.0001;
+
 
 boundaryField
-{   
-    Inlet 
+{
+    Inlet
     {
-      type              inletOutlet;
+      type             inletOutlet;
       inletValue         $internalField;
     }
 
@@ -33,21 +34,21 @@ boundaryField
 
 
     Side
-    {   
+    {
         type            empty;
     }
 
     Cylinder
     {
-        type            noSlip;
+        type            nutUSpaldingWallFunction;
+        value           uniform 0;
     }
 
     Wall
     {
-        type            movingWallVelocity;
-        value           $internalField;
+        type            nutUSpaldingWallFunction;
+        value           uniform 0;
     }
 }
-
 
 // ************************************************************************* //

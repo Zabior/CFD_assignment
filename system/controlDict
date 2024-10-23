@@ -15,7 +15,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     pimpleFoam;
+application     soncFoam;
 
 startFrom       startTime;
 
@@ -77,6 +77,13 @@ functions
                 prime2Mean  off;
                 base        time;
             }
+            T 
+            {
+                mean        on;
+                prime2Mean  off;
+                base        time;
+            }
+
         );
     }
 
@@ -99,7 +106,7 @@ functions
         liftDir     (0 1 0);
         dragDir     (1 0 0);
         pitchAxis   (0 0 1);
-        magUInf     1.;
+        magUInf     0.15;
         lRef        1.;
         Aref        1.;
     }

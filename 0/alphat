@@ -9,43 +9,46 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volVectorField;
-    object      U;
+    class       volScalarField;
+    location    "0";
+    object      alphat;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 1 -1 0 0 0 0];
+dimensions      [1 -1 -1 0 0 0 0];
 
-internalField   uniform (0.15 0 0);
+internalField   uniform 1.5e-5;
 
 boundaryField
-{   
-    Inlet 
+{
+    Inlet
     {
-      type              inletOutlet;
-      inletValue         $internalField;
+        type            calculated;
+        value           $internalField;
+    }
+
+    Side
+    {
+        type            empty;
     }
 
     Outlet
     {
-      type              zeroGradient;
-    }
-
-
-    Side
-    {   
-        type            empty;
+        type            zeroGradient;
     }
 
     Cylinder
     {
-        type            noSlip;
+        type            compressible::alphatWallFunction;
+        Prt             0.85;
+        value           uniform 0;
     }
 
     Wall
     {
-        type            movingWallVelocity;
-        value           $internalField;
+        type            compressible::alphatWallFunction;
+        Prt             0.85;
+        value           uniform 0;
     }
 }
 

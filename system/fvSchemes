@@ -15,26 +15,31 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
+fluxScheme      Kurganov;
+
 ddtSchemes
 {
-    default     backward; 
+    default         backward;
 }
 
 gradSchemes
 {
-    default     leastSquares; //Gauss linear;
+    default      leastSquares;
 }
 
 divSchemes
 {
     default         none;
-    div(phi,U)      Gauss linearUpwind grad(u);
-    div(phi,k)      Gauss limitedLinear 1;
-    div(phi,omega) Gauss  limitedLinear 1 ;
-    div(phi,R)      Gauss limitedLinear 1 ;
-    div(R)          Gauss midPoint;
-    div(phi,nuTilda) Gauss limitedLinear 1;//vanLeer ;
-    div((nuEff*dev2(T(grad(U))))) Gauss midPoint;
+    div(tauMC)      Gauss linear;
+    div(phi,U)      Gauss vanLeerV;
+    div(phi,k)     Gauss limitedLinear 1;
+    div(phi,omega)     Gauss limitedLinear 1;
+  div(phiv,p)      Gauss upwind;
+  div(phid,p)      Gauss vanLeer;
+  div(phi,K)      Gauss vanLeer;
+  div(phi,e)      Gauss vanLeer;
+  div(phi,nuTilda) Gauss vanLeer;
+  div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear ;
 }
 
 laplacianSchemes
@@ -44,7 +49,10 @@ laplacianSchemes
 
 interpolationSchemes
 {
-    default         linear ;
+    default         midPoint;
+    reconstruct(rho) vanLeer;
+    reconstruct(U)  vanLeerV;
+    reconstruct(T)  vanLeer;
 }
 
 snGradSchemes
@@ -52,16 +60,9 @@ snGradSchemes
     default         corrected;
 }
 
-fluxRequired
-{
-    default         no;
-    p               ;
-}
-
 wallDist
-{   
+{
     method          meshWave;
-}   
-    
+}
 
 // ************************************************************************* //
