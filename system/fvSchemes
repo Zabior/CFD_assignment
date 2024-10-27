@@ -32,6 +32,7 @@ divSchemes
     default         none;
     div(tauMC)      Gauss linear;
     div(phi,U)      Gauss vanLeerV;
+    // div(phi,U)      Gauss limitedLinearV 1;
     div(phi,k)     Gauss limitedLinear 1;
     div(phi,omega)     Gauss limitedLinear 1;
   div(phiv,p)      Gauss upwind;
@@ -39,7 +40,7 @@ divSchemes
   div(phi,K)      Gauss vanLeer;
   div(phi,e)      Gauss vanLeer;
   div(phi,nuTilda) Gauss vanLeer;
-  div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear ;
+  div(((rho*nuEff)*dev2(T(grad(U))))) Gauss midPoint;
 }
 
 laplacianSchemes
