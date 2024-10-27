@@ -1,10 +1,12 @@
 SetFactory("OpenCASCADE");
 intArcPoint = 0.5*Sin(Pi/4);
-extArcPoint = 0.6*Sin(Pi/4);
+extArcPoint = 0.7*Sin(Pi/4);
 fac = 0.5;
 ncyl = 200;
 nr = 20;
-ninlet = 250;
+ninlet = 200;
+ninlet_wall = 40;
+ninlet_top = 80;
 nwake = 180;
 rr = 1.03259422;
 rwake = 1.015;
@@ -113,7 +115,9 @@ Transfinite Curve {1, 4, 3, 2, 8, 7, 6, 5, 25, 24, 23, 30} = ncyl/4 Using Progre
 //+
 Transfinite Curve {10, 11, 12, 9} = nr Using Progression rr;
 //+
-Transfinite Curve {19, 13, 14, 32, 20, 16, 15, 29, 17, 18, 22, 21} = (ninlet - ncyl/4) Using Progression 1;
+Transfinite Curve {20, 16, 15, 29} = (ninlet_wall) Using Progression 1;
+//+
+Transfinite Curve {19, 13, 14, 32, 17, 18, 22, 21} = (ninlet_top) Using Progression 1;
 //+
 Transfinite Curve {26, 31, 27, 28} = nwake Using Progression rwake;
 //+
@@ -206,3 +210,5 @@ Physical Surface("Side", 89) = {17, 1, 21, 2, 44, 8, 41, 48, 56, 51, 54, 11, 10,
 Physical Surface("Inlet", 86) = {43, 39, 13, 16, 18, 22};
 //+
 Physical Surface("Outlet", 87) = {23, 26, 30};
+//+
+Physical Volume("Fluid", 91) = {7, 8, 1, 2, 3, 4, 5, 6, 11, 10, 9, 12};

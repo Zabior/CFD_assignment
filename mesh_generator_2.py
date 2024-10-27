@@ -141,7 +141,7 @@ n_curves += 1
 
 
 # MESHING
-refinement = 0.5
+refinement = 1.0
 n_points = int(72 * refinement)
 mesh_type = 'Progression'
 coef = 1.0
