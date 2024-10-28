@@ -47,8 +47,7 @@ boundaryField
         // type            movingWallVelocity;
         // value           $internalField;
         type            translatingWallVelocity;
-        //U           $internalField;
-        U           uniform (0.17748239349298847 0 0);
+        U           $internalField;
     }
 }
 
