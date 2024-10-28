@@ -19,7 +19,7 @@ application     soncFoam;
 
 startFrom       startTime;
 
-startTime       15;
+startTime       0;
 
 stopAt          endTime;
 
@@ -45,7 +45,7 @@ runTimeModifiable yes;
 
 adjustTimeStep  yes;
 
-maxCo           0.5;
+maxCo           0.2;
 
 
 functions

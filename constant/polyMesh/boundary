@@ -21,37 +21,32 @@ FoamFile
     Side
     {
         type            empty;
-        physicalType    patch;
-        nFaces          210904;
-        startFace       210064;
+        nFaces          124688;
+        startFace       123996;
     }
     Inlet
     {
         type            patch;
-        physicalType    patch;
-        nFaces          642;
-        startFace       420968;
+        nFaces          534;
+        startFace       248684;
     }
     Wall
     {
         type            wall;
-        physicalType    patch;
-        nFaces          401;
-        startFace       421610;
+        nFaces          373;
+        startFace       249218;
     }
     Outlet
     {
         type            patch;
-        physicalType    patch;
-        nFaces          241;
-        startFace       422011;
+        nFaces          161;
+        startFace       249591;
     }
     Cylinder
     {
         type            wall;
-        physicalType    patch;
-        nFaces          396;
-        startFace       422252;
+        nFaces          316;
+        startFace       249752;
     }
 )
 
