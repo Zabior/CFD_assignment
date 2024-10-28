@@ -14,7 +14,7 @@ import numpy as np
 # a = np.sqrt(1.4 * R * T)
 # d = Re * mu / (rho * M * a)
 d = 1.
-h_over_d = 0.4
+h_over_d = 0.2
 export_mesh = True
 
 gmsh.initialize()

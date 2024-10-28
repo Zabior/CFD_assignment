@@ -107,7 +107,7 @@ functions
         liftDir     (0 1 0);
         dragDir     (1 0 0);
         pitchAxis   (0 0 1);
-        magUInf     0.15;
+        magUInf     0.17748239349298847;
         lRef        1.;
         Aref        1.;
     }
