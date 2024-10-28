@@ -141,38 +141,38 @@ n_curves += 1
 
 
 # MESHING
-refinement = 1.0
-n_points = int(72 * refinement)
+refinement = 1.00
+n_points = int(100 * refinement)
 mesh_type = 'Progression'
 coef = 1.0
 gmsh.model.geo.mesh.setTransfiniteCurve(1, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(5, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(27, n_points, mesh_type, coef)
 
-n_points = int(72 * refinement)
+n_points = int(100 * refinement)
 mesh_type = 'Progression'
 coef = 1.0
 gmsh.model.geo.mesh.setTransfiniteCurve(3, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(7, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(17, n_points, mesh_type, coef)
 
-n_points = int(72 * refinement)
+n_points = int(100 * refinement)
 mesh_type = 'Progression'
 coef = 1.0
 gmsh.model.geo.mesh.setTransfiniteCurve(32, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(6, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(2, n_points, mesh_type, coef)
 
-n_points = int(72 * refinement)
+n_points = int(100 * refinement)
 mesh_type = 'Progression'
 coef = 1.0
 gmsh.model.geo.mesh.setTransfiniteCurve(4, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(8, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(22, n_points, mesh_type, coef)
 
-n_points = int(36 * refinement)
+n_points = int(48 * refinement)
 mesh_type = 'Progression'
-coef = 1.01
+coef = 1.025
 gmsh.model.geo.mesh.setTransfiniteCurve(9, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(10, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(11, n_points, mesh_type, coef)
