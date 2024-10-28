@@ -14,7 +14,7 @@ import numpy as np
 # a = np.sqrt(1.4 * R * T)
 # d = Re * mu / (rho * M * a)
 d = 1.
-h_over_d = 0.4
+h_over_d = 0.2
 export_mesh = True
 
 gmsh.initialize()
@@ -25,8 +25,8 @@ lc = 1e-2
 center = (0, 0, 0)  # Do not change
 inlet_x = -2.5 * d
 bottom_wall_y = center[1] - d / 2 - h_over_d * d
-outlet_x = 12 * d
-upper_y = 3 * d
+outlet_x = 10 * d
+upper_y = 2.5 * d
 
 n_points = 1
 n_curves = 1
@@ -69,7 +69,7 @@ for i in range(4):
 
 gmsh.model.geo.addPoint(inlet_x, bottom_wall_y, 0, lc, n_points)
 n_points += 1
-gmsh.model.geo.addPoint(inlet_x, center[1] - radius, 0, lc, n_points)
+gmsh.model.geo.addPoint(inlet_x, center[1] - radius * 0.7, 0, lc, n_points)
 n_points += 1
 gmsh.model.geo.addPoint(center[0] - radius, bottom_wall_y, 0, lc, n_points)
 n_points += 1
@@ -91,7 +91,7 @@ n_curves += 1
 
 gmsh.model.geo.addPoint(outlet_x, bottom_wall_y, 0, lc, n_points)
 n_points += 1
-gmsh.model.geo.addPoint(outlet_x, center[1] - radius, 0, lc, n_points)
+gmsh.model.geo.addPoint(outlet_x, center[1] - radius * 0.5, 0, lc, n_points)
 n_points += 1
 gmsh.model.geo.addLine(13, 14, n_curves)
 n_curves += 1
@@ -100,7 +100,7 @@ n_curves += 1
 gmsh.model.geo.addLine(15, 9, n_curves)
 n_curves += 1
 
-gmsh.model.geo.addPoint(outlet_x, center[1] + radius, 0, lc, n_points)
+gmsh.model.geo.addPoint(outlet_x, center[1] + radius * 1.4, 0, lc, n_points)
 n_points += 1
 gmsh.model.geo.addLine(15, 16, n_curves)
 n_curves += 1
@@ -109,7 +109,7 @@ n_curves += 1
 
 gmsh.model.geo.addPoint(outlet_x, upper_y, 0, lc, n_points)
 n_points += 1
-gmsh.model.geo.addPoint(center[0] + radius, upper_y, 0, lc, n_points)
+gmsh.model.geo.addPoint(center[0] + radius * 1.5, upper_y, 0, lc, n_points)
 n_points += 1
 gmsh.model.geo.addLine(16, 17, n_curves)
 n_curves += 1
@@ -118,7 +118,7 @@ n_curves += 1
 gmsh.model.geo.addLine(18, 6, n_curves)
 n_curves += 1
 
-gmsh.model.geo.addPoint(center[0] - radius, upper_y, 0, lc, n_points)
+gmsh.model.geo.addPoint(center[0] - radius * 1.2, upper_y, 0, lc, n_points)
 n_points += 1
 gmsh.model.geo.addLine(18, 19, n_curves)
 n_curves += 1
@@ -127,7 +127,7 @@ n_curves += 1
 
 gmsh.model.geo.addPoint(inlet_x, upper_y, 0, lc, n_points)
 n_points += 1
-gmsh.model.geo.addPoint(inlet_x, center[1] + radius, 0, lc, n_points)
+gmsh.model.geo.addPoint(inlet_x, center[1] + radius * 1.2, 0, lc, n_points)
 n_points += 1
 gmsh.model.geo.addLine(19, 20, n_curves)
 n_curves += 1
@@ -141,29 +141,29 @@ n_curves += 1
 
 
 # MESHING
-refinement = 0.5
-n_points = int(72 * refinement)
+refinement = 0.4
+n_points = int(200 * refinement)
 mesh_type = 'Progression'
 coef = 1.0
 gmsh.model.geo.mesh.setTransfiniteCurve(1, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(5, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(27, n_points, mesh_type, coef)
 
-n_points = int(72 * refinement)
+n_points = int(200 * refinement)
 mesh_type = 'Progression'
 coef = 1.0
 gmsh.model.geo.mesh.setTransfiniteCurve(3, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(7, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(17, n_points, mesh_type, coef)
 
-n_points = int(72 * refinement)
+n_points = int(200 * refinement)
 mesh_type = 'Progression'
 coef = 1.0
 gmsh.model.geo.mesh.setTransfiniteCurve(32, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(6, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(2, n_points, mesh_type, coef)
 
-n_points = int(72 * refinement)
+n_points = int(200 * refinement)
 mesh_type = 'Progression'
 coef = 1.0
 gmsh.model.geo.mesh.setTransfiniteCurve(4, n_points, mesh_type, coef)
@@ -172,39 +172,39 @@ gmsh.model.geo.mesh.setTransfiniteCurve(22, n_points, mesh_type, coef)
 
 n_points = int(36 * refinement)
 mesh_type = 'Progression'
-coef = 1.01
+coef = 1.0
 gmsh.model.geo.mesh.setTransfiniteCurve(9, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(10, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(11, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(12, n_points, mesh_type, coef)
 
-n_points = int(48 * refinement)
+n_points = int(72 * refinement)
 mesh_type = 'Progression'
-coef = 1.01
-gmsh.model.geo.mesh.setTransfiniteCurve(16, n_points, mesh_type, coef)
+coef = 1.0
+gmsh.model.geo.mesh.setTransfiniteCurve(16, n_points, mesh_type, -coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(14, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(18, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(20, n_points, mesh_type, coef)
 
-n_points = int(96 * refinement)
+n_points = int(200 * refinement)
 mesh_type = 'Progression'
-coef = -1.035
-gmsh.model.geo.mesh.setTransfiniteCurve(30, n_points, mesh_type, coef)
+coef = -1.015
+gmsh.model.geo.mesh.setTransfiniteCurve(30, n_points, mesh_type, 1.0)
 gmsh.model.geo.mesh.setTransfiniteCurve(28, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(26, n_points, mesh_type, coef)
-gmsh.model.geo.mesh.setTransfiniteCurve(24, n_points, mesh_type, -coef)
+gmsh.model.geo.mesh.setTransfiniteCurve(24, n_points, mesh_type, 1.0)
 
-n_points = int(64 * refinement)
+n_points = int(140 * refinement)
 mesh_type = 'Progression'
-coef = -1.045
-gmsh.model.geo.mesh.setTransfiniteCurve(29, n_points, mesh_type, -coef)
+coef = -1.04
+gmsh.model.geo.mesh.setTransfiniteCurve(29, n_points, mesh_type, -1.0)
 gmsh.model.geo.mesh.setTransfiniteCurve(31, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(15, n_points, mesh_type, -coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(13, n_points, mesh_type, coef)
 
-n_points = int(240 * refinement)
+n_points = int(1000 * refinement)
 mesh_type = 'Progression'
-coef = -1.015
+coef = -1.002
 gmsh.model.geo.mesh.setTransfiniteCurve(25, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(23, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(21, n_points, mesh_type, coef)
