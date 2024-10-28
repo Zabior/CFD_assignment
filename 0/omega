@@ -10,27 +10,26 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
-    location    "0";
-    object      nut;
+    object      omega;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 2 -1 0 0 0 0];
+dimensions      [0 0 -1 0 0 0 0];
 
-// internalField   uniform 1.5e-5;
-internalField   uniform 1.7748239349298848e-05;
+// internalField   uniform 4.08248290463863;
+internalField   uniform 4.83045891539648 ; 
 
 boundaryField
 {
     Inlet
     {
-      type           inletOutlet; 
-      inletValue     $internalField;
+      type              inletOutlet;
+      inletValue        $internalField;
     }
 
     Outlet
     {
-      type            zeroGradient;
+      type              zeroGradient;
     }
 
 
@@ -41,14 +40,16 @@ boundaryField
 
     Cylinder
     {
-       type            nutUWallFunction;
-       value           $internalField;
+        type            omegaWallFunction;
+        blended         true;
+        value           $internalField;
     }
 
     Wall
     {
-       type            nutUWallFunction;
-       value           $internalField;
+        type            omegaWallFunction;
+        blended         true;
+        value           $internalField;
     }
 }
 

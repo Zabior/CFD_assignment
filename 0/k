@@ -10,27 +10,27 @@ FoamFile
     version     2.0;
     format      ascii;
     class       volScalarField;
-    location    "0";
-    object      nut;
+    object      k;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 2 -1 0 0 0 0];
+dimensions      [0 2 -2 0 0 0 0];
 
-// internalField   uniform 1.5e-5;
-internalField   uniform 1.7748239349298848e-05;
+// internalField   uniform 3.375e-06; // 
+internalField   uniform 4.725e-06; 
 
 boundaryField
 {
     Inlet
     {
-      type           inletOutlet; 
-      inletValue     $internalField;
+      type             turbulentIntensityKineticEnergyInlet;
+      intensity       0.01;
+      value       $internalField;
     }
 
     Outlet
     {
-      type            zeroGradient;
+      type              zeroGradient;
     }
 
 
@@ -41,16 +41,15 @@ boundaryField
 
     Cylinder
     {
-       type            nutUWallFunction;
-       value           $internalField;
+        type            kqRWallFunction;
+        value           0.;
     }
 
     Wall
     {
-       type            nutUWallFunction;
-       value           $internalField;
+        type            kqRWallFunction;
+        value           0.;
     }
 }
-
 
 // ************************************************************************* //

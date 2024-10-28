@@ -19,7 +19,7 @@ fluxScheme      Kurganov;
 
 ddtSchemes
 {
-    default         backward;  // first-order
+    default         backward;  // second-order
 }
 
 gradSchemes
@@ -32,8 +32,8 @@ divSchemes
 {
     default         none;
     div(tauMC)      Gauss linear;  //second order
-    div(phi,U)      Gauss vanLeerV;  //second order
-    // div(phi,U)      Gauss limitedLinearV 1;
+    // div(phi,U)      Gauss vanLeerV;  //second order
+    div(phi,U)      Gauss limitedLinearV 0.3;
 
     div(phi,k)     Gauss limitedLinear 1;  //first-second order
     div(phi,omega)     Gauss limitedLinear 1;  //first-second order
@@ -45,7 +45,7 @@ divSchemes
   div(phi,e)      Gauss vanLeer;
   div(phi,nuTilda) Gauss vanLeer;
   
-  div(((rho*nuEff)*dev2(T(grad(U))))) Gauss midPoint;
+  div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
 }
 
 laplacianSchemes
