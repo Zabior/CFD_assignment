@@ -28,8 +28,9 @@ boundaryField
 
     Outlet
     {
-      type             inletOutlet;
-      inletValue         $internalField;
+    //   type             inletOutlet;
+    //   inletValue         $internalField;
+    type zeroGradient;
     }
 
 
