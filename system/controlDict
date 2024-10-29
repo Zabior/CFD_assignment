@@ -19,7 +19,7 @@ application     soncFoam;
 
 startFrom       startTime;
 
-startTime       0;
+startTime       15;
 
 stopAt          endTime;
 
