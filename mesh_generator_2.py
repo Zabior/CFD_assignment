@@ -1,10 +1,28 @@
 import gmsh
 import sys
-
+from helper import *
+import math
 import numpy as np
 
 # SETUP VARIABLES
-# Re = 4e4
+Re = 4e4
+D = 1.0
+rho = 1.0
+
+Uinf = math.sqrt(1.4) * 0.15  # nondimensional
+Cf = (2 * math.log10(Re) - 0.65)**(-2.3)
+utau = Uinf * math.sqrt(Cf / 2)
+mu = Uinf * D * rho / Re
+nu = mu / rho
+
+viscous_length_scale = nu / utau
+yplus_target_cyl = 1.0
+yplus_target_wall = 20.0
+
+ymin_cyl = yplus_target_cyl * viscous_length_scale
+ymin_wall = yplus_target_wall * viscous_length_scale
+
+
 # p = 101325
 # R = 287.05
 # T = 293
@@ -13,6 +31,9 @@ import numpy as np
 # M = 0.15
 # a = np.sqrt(1.4 * R * T)
 # d = Re * mu / (rho * M * a)
+
+filename = 'mesh_wide.msh'
+
 d = 1.
 h_over_d = 0.2
 export_mesh = True
@@ -23,10 +44,10 @@ gmsh.model.add('mesh')
 lc = 1e-2
 
 center = (0, 0, 0)  # Do not change
-inlet_x = -2.5 * d
+inlet_x = -5.0 * d
 bottom_wall_y = center[1] - d / 2 - h_over_d * d
-outlet_x = 10 * d
-upper_y = 2.5 * d
+outlet_x = 20 * d
+upper_y = 5.0 * d
 
 n_points = 1
 n_curves = 1
@@ -170,17 +191,19 @@ gmsh.model.geo.mesh.setTransfiniteCurve(4, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(8, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(22, n_points, mesh_type, coef)
 
-n_points = int(72 * refinement)
+# RADIAL AROUND CYLINDER
+n_points = int(100 * refinement)
 mesh_type = 'Progression'
-coef = 1.025
+coef = r_from_ymin(ymin_cyl, radius - D/2, n_points)
 gmsh.model.geo.mesh.setTransfiniteCurve(9, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(10, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(11, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(12, n_points, mesh_type, coef)
 
-n_points = int(72 * refinement)
+# NORMAL NEAR THE WALL
+n_points = int(120 * refinement)
 mesh_type = 'Progression'
-coef = 1.05
+coef = r_from_ymin(ymin_wall, D * (1 + h_over_d) - radius, n_points)
 gmsh.model.geo.mesh.setTransfiniteCurve(16, n_points, mesh_type, -coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(14, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(18, n_points, mesh_type, coef)
@@ -194,7 +217,7 @@ gmsh.model.geo.mesh.setTransfiniteCurve(28, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(26, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(24, n_points, mesh_type, 1.0)
 
-n_points = int(140 * refinement)
+n_points = int(200 * refinement)
 mesh_type = 'Progression'
 coef = -1.04
 gmsh.model.geo.mesh.setTransfiniteCurve(29, n_points, mesh_type, -1.0)
@@ -202,7 +225,7 @@ gmsh.model.geo.mesh.setTransfiniteCurve(31, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(15, n_points, mesh_type, -coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(13, n_points, mesh_type, coef)
 
-n_points = int(600 * refinement)
+n_points = int(800 * refinement)
 mesh_type = 'Progression'
 coef = -1.01
 gmsh.model.geo.mesh.setTransfiniteCurve(25, n_points, mesh_type, coef)
@@ -271,7 +294,7 @@ gmsh.model.geo.synchronize()
 
 if export_mesh:
     gmsh.model.mesh.generate(3)
-    gmsh.write('mesh.msh')
+    gmsh.write(filename)
 
 gmsh.fltk.run()
 
