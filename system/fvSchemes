@@ -1,7 +1,7 @@
 /*--------------------------------*- C++ -*----------------------------------*\
 | =========                 |                                                 |
 | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
-|  \\    /   O peration     | Version:  v2006                                 |
+|  \\    /   O peration     | Version:  v2406                                 |
 |   \\  /    A nd           | Website:  www.openfoam.com                      |
 |    \\/     M anipulation  |                                                 |
 \*---------------------------------------------------------------------------*/
@@ -10,42 +10,45 @@ FoamFile
     version     2.0;
     format      ascii;
     class       dictionary;
-    location    "system";
     object      fvSchemes;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-fluxScheme      Kurganov;
-
 ddtSchemes
 {
-    default         backward;  // second-order
+    default         steadyState;
 }
 
 gradSchemes
 {
-    // default      leastSquares;
-    default         Gauss linear; // second order
+    default         Gauss linear;
+
+    limited         cellLimited Gauss linear 1;
+    grad(U)         $limited;
+    grad(k)         $limited;
+    grad(omega)     $limited;
+    grad(subsetU)   $limited;
 }
 
 divSchemes
 {
     default         none;
-    div(tauMC)      Gauss linear;  //second order
-    // div(phi,U)      Gauss vanLeerV;  //second order
-    div(phi,U)      Gauss limitedLinearV 0.3;
 
-    div(phi,k)     Gauss limitedLinear 1;  //first-second order
-    div(phi,omega)     Gauss limitedLinear 1;  //first-second order
- 
-  div(phiv,p)      Gauss upwind; 
-  div(phid,p)      Gauss vanLeer; //second order
+    div(phi,U)      bounded Gauss linearUpwind limited;
 
-  div(phi,K)      Gauss vanLeer;
-  div(phi,e)      Gauss vanLeer;
-  div(phi,nuTilda) Gauss vanLeer;
-  
-  div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
+    energy          bounded Gauss linearUpwind limited;
+    div(phi,e)      $energy;
+    div(phi,K)      $energy;
+    div(phi,Ekp)    $energy;
+
+    turbulence      bounded Gauss upwind;
+    div(phi,k)      $turbulence;
+    div(phi,omega)  $turbulence;
+
+    div(phid,p)     Gauss upwind;
+    div((phi|interpolate(rho)),p)  bounded Gauss upwind;
+
+    div(((rho*nuEff)*dev2(T(grad(U)))))    Gauss linear;
 }
 
 laplacianSchemes
@@ -55,10 +58,7 @@ laplacianSchemes
 
 interpolationSchemes
 {
-    default         midPoint;
-    reconstruct(rho) vanLeer;
-    reconstruct(U)  vanLeerV;
-    reconstruct(T)  vanLeer;
+    default         linear;
 }
 
 snGradSchemes
@@ -70,5 +70,6 @@ wallDist
 {
     method          meshWave;
 }
+
 
 // ************************************************************************* //

@@ -30,7 +30,10 @@ boundaryField
     {
     //   type             inletOutlet;
     //   inletValue         $internalField;
-            type            zeroGradient;
+    //      type            zeroGradient;
+    type        fixedValue;
+    value       $internalField;
+
     }
 
 
