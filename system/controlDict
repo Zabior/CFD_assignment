@@ -19,7 +19,7 @@ application     soncFoam;
 
 startFrom       startTime;
 
-startTime       15;
+startTime       0;
 
 stopAt          endTime;
 
@@ -271,7 +271,7 @@ functions
     interpolate true ;
     }
 );
-fields          ( p  );
+fields          ( p, pMean  );
 }
 }
 

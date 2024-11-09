@@ -46,6 +46,11 @@ divSchemes
   div(phi,nuTilda) Gauss vanLeer;
   
   div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
+  
+  div(((rho*(thermo:mu|rho))*dev2(T(grad(U))))) Gauss linear;
+  div((rho*R)) Gauss linear;
+  div(phi,epsilon) Gauss linear;
+  div(phi,R) Gauss linear;
 }
 
 laplacianSchemes
