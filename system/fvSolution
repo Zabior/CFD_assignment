@@ -97,6 +97,17 @@ kFinal
     $k;
     relTol          0;
 }
+epsilonFinal
+{
+$epsilon;
+relTol 0;
+}
+
+RFinal
+{
+$R;
+relTol 0;
+}
 
 
 
