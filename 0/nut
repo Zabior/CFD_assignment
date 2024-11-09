@@ -41,13 +41,13 @@ boundaryField
 
     Cylinder
     {
-       type            nutUWallFunction;
+       type            nutUSpaldingWallFunction;
        value           $internalField;
     }
 
     Wall
     {
-       type            nutUWallFunction;
+       type            nutUSpaldingWallFunction;
        value           $internalField;
     }
 }
