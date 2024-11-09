@@ -16,8 +16,8 @@ mu = Uinf * D * rho / Re
 nu = mu / rho
 
 viscous_length_scale = nu / utau
-yplus_target_cyl = 1.0
-yplus_target_wall = 20.0
+yplus_target_cyl = 0.7
+yplus_target_wall = 2.0
 
 ymin_cyl = yplus_target_cyl * viscous_length_scale
 ymin_wall = yplus_target_wall * viscous_length_scale
@@ -35,7 +35,7 @@ ymin_wall = yplus_target_wall * viscous_length_scale
 filename = 'mesh_wide.msh'
 
 d = 1.
-h_over_d = 0.2
+h_over_d = 0.4
 export_mesh = True
 
 gmsh.initialize()
@@ -47,7 +47,7 @@ center = (0, 0, 0)  # Do not change
 inlet_x = -5.0 * d
 bottom_wall_y = center[1] - d / 2 - h_over_d * d
 outlet_x = 20 * d
-upper_y = 5.0 * d
+upper_y = 4.0 * d
 
 n_points = 1
 n_curves = 1
@@ -162,14 +162,14 @@ n_curves += 1
 
 
 # MESHING
-ncyl = 2000
-nrad = 100
-nwall = 120
-nupper = 300
-ninlet = 300
-nwake = 1200
+ncyl = 1500
+nrad = 300
+nwall = 500
+nupper = 400
+ninlet = 250
+nwake = 600
 
-refinement = 0.3
+refinement = 0.2
 n_points = int(ncyl / 4 * refinement)
 mesh_type = 'Progression'
 coef = 1.0
@@ -203,6 +203,7 @@ n_points = int(nrad * refinement)
 mesh_type = 'Progression'
 coef = r_from_ymin(ymin_cyl, radius - D/2, n_points)
 ymax_cyl = ymin_cyl * coef ** (n_points-1)
+print(coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(9, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(10, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(11, n_points, mesh_type, coef)
@@ -212,6 +213,7 @@ gmsh.model.geo.mesh.setTransfiniteCurve(12, n_points, mesh_type, coef)
 n_points = int(nwall * refinement)
 mesh_type = 'Progression'
 coef = r_from_ymin(ymin_wall, D * (1 + h_over_d) - radius, n_points)
+print(coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(16, n_points, mesh_type, -coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(14, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(18, n_points, mesh_type, coef)
@@ -219,23 +221,23 @@ gmsh.model.geo.mesh.setTransfiniteCurve(20, n_points, mesh_type, coef)
 
 n_points = int(nupper * refinement)
 mesh_type = 'Progression'
-coef = -r_from_ymin(ymax_cyl, abs(upper_y - radius), n_points)
-gmsh.model.geo.mesh.setTransfiniteCurve(30, n_points, mesh_type, 1.0)
+coef = -r_from_ymin(ymax_cyl, abs(upper_y - radius), n_points) + 0.005
+gmsh.model.geo.mesh.setTransfiniteCurve(30, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(28, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(26, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(24, n_points, mesh_type, 1.0)
 
 n_points = int(ninlet * refinement)
 mesh_type = 'Progression'
-coef = -r_from_ymin(ymax_cyl, abs(inlet_x - radius), n_points)
-gmsh.model.geo.mesh.setTransfiniteCurve(29, n_points, mesh_type, -1.0)
+coef = -r_from_ymin(ymax_cyl, abs(inlet_x - radius), n_points) + 0.02
+gmsh.model.geo.mesh.setTransfiniteCurve(29, n_points, mesh_type, -coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(31, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(15, n_points, mesh_type, -coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(13, n_points, mesh_type, coef)
 
 n_points = int(nwake * refinement)
 mesh_type = 'Progression'
-coef = -r_from_ymin(ymax_cyl, abs(outlet_x - radius), n_points)
+coef = -r_from_ymin(ymax_cyl, abs(outlet_x - radius), n_points) + 0.004
 gmsh.model.geo.mesh.setTransfiniteCurve(25, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(23, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(21, n_points, mesh_type, coef)
@@ -288,7 +290,7 @@ if export_mesh is True:
     for i in range(1, 13):
         dimtags.append((2, i))
 
-    gmsh.model.geo.extrude(dimtags, 0, 0, 1, numElements=[1], recombine=True)
+    gmsh.model.geo.extrude(dimtags, 0, 0, 0.01, numElements=[1], recombine=True)
 
     gmsh.model.geo.addPhysicalGroup(2, [41, 199, 181, 177, 159, 137], 1000, 'Inlet')
     gmsh.model.geo.addPhysicalGroup(2, [89, 111, 133], 1001, 'Outlet')

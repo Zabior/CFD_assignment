@@ -19,7 +19,7 @@ application     soncFoam;
 
 startFrom       startTime;
 
-startTime       15;
+startTime       490;
 
 stopAt          endTime;
 
@@ -29,7 +29,7 @@ deltaT          0.005;
 
 writeControl adjustableRunTime;
 
-writeInterval   1;
+writeInterval   5;
 
 purgeWrite      0;
 
@@ -271,7 +271,7 @@ functions
     interpolate true ;
     }
 );
-fields          ( p  );
+fields          ( pMean  );
 }
 }
 
