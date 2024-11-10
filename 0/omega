@@ -22,8 +22,9 @@ boundaryField
 {
     Inlet
     {
-      type              inletOutlet;
-      inletValue        $internalField;
+      type              turbulentMixingLengthFrequencyInlet;
+      mixingLength 0.0045;
+      value        $internalField;
     }
 
     Outlet
@@ -49,6 +50,10 @@ boundaryField
         type            omegaWallFunction;
         blended         true;
         value           $internalField;
+    }
+        Top
+    {
+        type    slip;
     }
 }
 

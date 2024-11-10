@@ -29,7 +29,7 @@ boundaryField
     Outlet
     {
        type             fixedValue;
-       inletValue         $internalField;
+       value         $internalField;
     //        type            zeroGradient;
     }
 
@@ -46,6 +46,10 @@ boundaryField
     Wall
     {
         type            zeroGradient;
+    }
+    Top
+    {
+        type    slip;
     }
 }
 

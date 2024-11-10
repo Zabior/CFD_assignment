@@ -49,6 +49,10 @@ boundaryField
         //type            translatingWallVelocity;
         //U           $internalField;
     }
+        Top
+    {
+        type    slip;
+    }
 }
 
 

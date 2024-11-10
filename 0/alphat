@@ -51,6 +51,10 @@ boundaryField
         Prt             0.85;
         value           uniform 0;
     }
+        Top
+    {
+        type    slip;
+    }
 }
 
 

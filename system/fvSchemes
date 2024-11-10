@@ -19,7 +19,7 @@ fluxScheme      Kurganov;
 
 ddtSchemes
 {
-    default         backward;  // second-order
+    default         steadyState;  // second-order
 }
 
 gradSchemes
@@ -41,9 +41,10 @@ divSchemes
   div(phiv,p)      Gauss upwind; 
   div(phid,p)      Gauss vanLeer; //second order
 
-  div(phi,K)      Gauss vanLeer;
-  div(phi,e)      Gauss vanLeer;
-  div(phi,nuTilda) Gauss vanLeer;
+  div(phi,K)      bounded Gauss vanLeer;
+  div(phi,e)      bounded Gauss vanLeer;
+  div(phi,Ekp)    bounded Gauss vanLeer;
+  div(phi,nuTilda) bounded Gauss vanLeer;
   
   div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
 }

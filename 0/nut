@@ -24,8 +24,8 @@ boundaryField
 {
     Inlet
     {
-      type           inletOutlet; 
-      inletValue     $internalField;
+      type           calculated;
+      value     $internalField;
     }
 
     Outlet
@@ -49,6 +49,10 @@ boundaryField
     {
        type            nutUSpaldingWallFunction;
        value           $internalField;
+    }
+        Top
+    {
+        type    slip;
     }
 }
 

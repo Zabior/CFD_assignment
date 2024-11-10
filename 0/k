@@ -50,6 +50,10 @@ boundaryField
         type            kqRWallFunction;
         value           0.;
     }
+        Top
+    {
+        type    slip;
+    }
 }
 
 // ************************************************************************* //

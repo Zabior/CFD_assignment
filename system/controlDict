@@ -15,21 +15,21 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     soncFoam;
+application     rhoSimpleFoam;
 
 startFrom       startTime;
 
-startTime       490;
+startTime       0;
 
 stopAt          endTime;
 
-endTime         500;
+endTime         50000;
 
-deltaT          0.005;
+deltaT          1;
 
 writeControl adjustableRunTime;
 
-writeInterval   5;
+writeInterval   50;
 
 purgeWrite      0;
 
@@ -43,7 +43,7 @@ timePrecision   8;
 
 runTimeModifiable yes;
 
-adjustTimeStep  yes;
+adjustTimeStep  no;
 
 maxCo           0.1;
 
@@ -55,7 +55,8 @@ functions
         type            fieldAverage;
         libs            (fieldFunctionObjects);
         writeControl    writeTime;
-        timeStart       100;
+        timeStart       2000;
+        log true;
         fields
         (
             U
@@ -77,13 +78,13 @@ functions
                 prime2Mean  off;
                 base        time;
             }
-            T 
+            T
             {
                 mean        on;
                 prime2Mean  off;
                 base        time;
             }
-            k 
+            k
             {
                 mean        on;
                 prime2Mean  off;
@@ -101,7 +102,7 @@ functions
 
         patches
         (
-           Cylinder 
+           Cylinder
         );
         p               p;
         U               U;

@@ -166,7 +166,7 @@ ncyl = 1500
 nrad = 300
 nwall = 500
 nupper = 400
-ninlet = 250
+ninlet = 300
 nwake = 600
 
 refinement = 0.2
@@ -229,7 +229,7 @@ gmsh.model.geo.mesh.setTransfiniteCurve(24, n_points, mesh_type, 1.0)
 
 n_points = int(ninlet * refinement)
 mesh_type = 'Progression'
-coef = -r_from_ymin(ymax_cyl, abs(inlet_x - radius), n_points) + 0.02
+coef = -r_from_ymin(ymax_cyl, abs(inlet_x - radius), n_points) + 0.01
 gmsh.model.geo.mesh.setTransfiniteCurve(29, n_points, mesh_type, -coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(31, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(15, n_points, mesh_type, -coef)
@@ -237,7 +237,7 @@ gmsh.model.geo.mesh.setTransfiniteCurve(13, n_points, mesh_type, coef)
 
 n_points = int(nwake * refinement)
 mesh_type = 'Progression'
-coef = -r_from_ymin(ymax_cyl, abs(outlet_x - radius), n_points) + 0.004
+coef = -r_from_ymin(ymax_cyl, abs(outlet_x - radius), n_points) + 0.003
 gmsh.model.geo.mesh.setTransfiniteCurve(25, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(23, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(21, n_points, mesh_type, coef)
@@ -290,9 +290,10 @@ if export_mesh is True:
     for i in range(1, 13):
         dimtags.append((2, i))
 
-    gmsh.model.geo.extrude(dimtags, 0, 0, 0.01, numElements=[1], recombine=True)
+    gmsh.model.geo.extrude(dimtags, 0, 0, 1, numElements=[1], recombine=True)
 
-    gmsh.model.geo.addPhysicalGroup(2, [41, 199, 181, 177, 159, 137], 1000, 'Inlet')
+    gmsh.model.geo.addPhysicalGroup(2, [41, 199, 181], 1000, 'Inlet')
+    gmsh.model.geo.addPhysicalGroup(2, [177, 159, 137], 1006, 'Top')
     gmsh.model.geo.addPhysicalGroup(2, [89, 111, 133], 1001, 'Outlet')
     gmsh.model.geo.addPhysicalGroup(2, [45, 85, 63], 1002, 'Wall')
     gmsh.model.geo.addPhysicalGroup(2, [186, 208, 54, 76, 98, 120, 142, 164, 230, 252, 274, 296, 1, 2, 3,
