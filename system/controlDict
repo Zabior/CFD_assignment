@@ -29,7 +29,7 @@ deltaT          1;
 
 writeControl adjustableRunTime;
 
-writeInterval   100;
+writeInterval   500;
 
 purgeWrite      0;
 
@@ -52,7 +52,7 @@ functions
         type            fieldAverage;
         libs            (fieldFunctionObjects);
         writeControl    writeTime;
-        timeStart       100;
+        timeStart       1000;
         log true;
         fields
         (
@@ -95,7 +95,7 @@ functions
     {
         type            forceCoeffs;
         libs            (forces);
-        outputInterval      0.5;
+        outputInterval      5;
 
         patches
         (

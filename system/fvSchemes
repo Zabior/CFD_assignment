@@ -15,8 +15,6 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-//fluxScheme      Kurganov;
-
 ddtSchemes
 {
     default         steadyState;  // second-order
@@ -25,41 +23,37 @@ ddtSchemes
 gradSchemes
 {
     // default      leastSquares;
-    default         cellMDLimited Gauss linear 1.0; // second order
+    default         Gauss linear; // second order
 }
 
 divSchemes
 {
     default         none;
-    //div(tauMC)      Gauss linear;  //second order
-    // div(phi,U)      Gauss vanLeerV;  //second order
-    div(phi,U)      Gauss linearUpwind grad(U);
+    
+    div(phi,U)      Gauss upwind;
 
-    div(phi,k)   Gauss linearUpwind grad(omega);
-    div(phi,omega)     Gauss linearUpwind grad(omega);
+    div(phi,k)     Gauss upwind; 
+    div(phi,omega)     Gauss upwind;
  
-  div(phiv,p)      Gauss limitedLinear 1; 
-  div(phid,p)      Gauss vanLeer; //second order
+  div(phiv,p)      bounded Gauss upwind; 
+  div(phid,p)      bounded Gauss upwind;
 
-  div(phi,K)      bounded Gauss vanLeer;
-  div(phi,e)      bounded Gauss vanLeer;
-  div(phi,Ekp)    bounded Gauss vanLeer;
-  div(phi,nuTilda) bounded Gauss vanLeer;
+  div(phi,K)      bounded Gauss upwind;
+  div(phi,e)      bounded Gauss upwind;
+  div(phi,Ekp)    bounded Gauss upwind;
+  div(phi,nuTilda) bounded Gauss upwind;
   
   div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
 }
 
 laplacianSchemes
 {
-    default         Gauss linear limited 1.0;
+    default         Gauss linear corrected;
 }
 
 interpolationSchemes
 {
     default         midPoint;
-    reconstruct(rho) vanLeer;
-    reconstruct(U)  vanLeerV;
-    reconstruct(T)  vanLeer;
 }
 
 snGradSchemes
@@ -71,5 +65,3 @@ wallDist
 {
     method          meshWave;
 }
-
-// ************************************************************************* //

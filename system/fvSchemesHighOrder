@@ -1,0 +1,80 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2006                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      fvSchemes;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+//fluxScheme      Kurganov;
+
+ddtSchemes
+{
+    default         steadyState;  // second-order
+}
+
+gradSchemes
+{
+    // default      leastSquares;
+    default         cellMDLimited Gauss linear 1.0; // second order
+}
+
+divSchemes
+{
+    default         none;
+    //div(tauMC)      Gauss linear;  //second order
+    // div(phi,U)      Gauss vanLeerV;  //second order
+    div(phi,U)      Gauss linearUpwind grad(U);
+
+    div(phi,k)   Gauss linearUpwind grad(omega);
+    div(phi,omega)     Gauss linearUpwind grad(omega);
+ 
+  div(phiv,p)      Gauss limitedLinear 1; 
+  div(phid,p)      Gauss vanLeer; //second order
+
+//   div(phi,K)      bounded Gauss vanLeer;
+//   div(phi,e)      bounded Gauss vanLeer;
+//   div(phi,Ekp)    bounded Gauss vanLeer;
+//   div(phi,nuTilda) bounded Gauss vanLeer;
+
+  div(phi,K)      bounded Gauss upwind;
+  div(phi,e)      bounded Gauss upwind;
+  div(phi,Ekp)    bounded Gauss upwind;
+  div(phi,nuTilda) bounded Gauss upwind;
+  
+  div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
+}
+
+laplacianSchemes
+{
+    default         Gauss linear limited 1.0;
+}
+
+interpolationSchemes
+{
+    default         midPoint;
+    reconstruct(rho) vanLeer;
+    reconstruct(U)  vanLeerV;
+    reconstruct(T)  vanLeer;
+}
+
+snGradSchemes
+{
+    default         corrected;
+}
+
+wallDist
+{
+    method          meshWave;
+}
+
+// ************************************************************************* //
