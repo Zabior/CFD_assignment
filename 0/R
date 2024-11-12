@@ -9,51 +9,48 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       volScalarField;
-    object      k;
+    class       volSymmTensorField;
+    location    "0";
+    object      R;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-dimensions      [0 2 -2 0 0 0 0];
+dimensions      [0 2 -2 0 0 0 0];  // m^2/s^2
 
-// internalField   uniform 3.375e-06; // 
-internalField   uniform 4.725e-06; 
+internalField   uniform (3.15e-6 0 0 3.15e-6  0 3.15e-6 );  // Initial guess: isotropic R with a small value
 
 boundaryField
 {
     Inlet
     {
-      type             turbulentIntensityKineticEnergyInlet;
-      intensity       0.01;
-      value       $internalField;
+        type            fixedValue;
+        value           $internalField;  // Modify based on physical conditions
     }
 
     Outlet
     {
-      type              zeroGradient;
+        type            zeroGradient;
     }
-
-
     Side
-    {
+    {   
         type            empty;
     }
 
     Cylinder
     {
-        type            kqRWallFunction;
-        value           0.;
+        type            fixedValue;
+        value           uniform (0 0 0 0 0 0);  // Typically, no-slip condition implies R = 0 at walls
     }
 
     Wall
     {
-        type            kqRWallFunction;
-        value           0.;
+        type            fixedValue;
+        value           uniform (0 0 0 0 0 0);  // Typically, no-slip condition implies R = 0 at walls
     }
-        Top
-    {
-        type    slip;
+    Top {
+    type slip;
     }
+    
 }
 
 // ************************************************************************* //

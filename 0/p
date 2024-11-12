@@ -24,6 +24,10 @@ boundaryField
     {
         type            totalPressure;
         p0              uniform 1.0158387931980135; // total pressure at the inlet
+        // U               U;
+        value $internalField;
+        gamma 1.4;
+        //U             uniform (0.17748239349298847 0 0);
     }
 
     Outlet
@@ -49,7 +53,11 @@ boundaryField
     }
     Top
     {
-        type    slip;
+            //    type             fixedValue;
+    //    value         $internalField;
+        //         type            totalPressure;
+        // p0              uniform 1.0158387931980135; // total pressure at the inlet
+    type slip;
     }
 }
 

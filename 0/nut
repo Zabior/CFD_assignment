@@ -24,13 +24,18 @@ boundaryField
 {
     Inlet
     {
-      type           calculated;
-      value     $internalField;
+    //   type           inletOutlet; 
+    //     inletValue      $internalField;
+
+    type calculated;
+    value $internalField;
     }
 
     Outlet
     {
-      type            zeroGradient;
+//      type           calculated;
+//      value     $internalField;
+	type zeroGradient;
     }
 
 
@@ -41,18 +46,24 @@ boundaryField
 
     Cylinder
     {
-       type            nutUSpaldingWallFunction;
+       type            nutUWallFunction;
        value           $internalField;
     }
 
     Wall
     {
-       type            nutUSpaldingWallFunction;
+       type            nutUWallFunction;
        value           $internalField;
     }
         Top
     {
-        type    slip;
+    //     type           calculated;
+    //   value     $internalField;
+        type slip;
+        //       type           inletOutlet; 
+        // inletValue      $internalField;
+	// type zeroGradient;
+
     }
 }
 

@@ -21,10 +21,16 @@ internalField   uniform (0.17748239349298847 0 0);
 boundaryField
 {   
     Inlet 
-    {
-      type              inletOutlet;
-      inletValue         $internalField;
-    }
+   {
+    // type inletOutlet;
+    // inletValue $internalField;
+    
+    // type              zeroGradient;
+    
+type                pressureDirectedInletOutletVelocity;    
+inletDirection  uniform (1 0 0);         
+value               $internalField;
+   }
 
     Outlet
     {
@@ -44,15 +50,24 @@ boundaryField
 
     Wall
     {
-        type            movingWallVelocity;
-        value           $internalField;
-        //type            translatingWallVelocity;
-        //U           $internalField;
+        //  type            movingWallVelocity;
+        //  value           $internalField;
+        type            translatingWallVelocity;
+        U           $internalField;
     }
-        Top
-    {
-        type    slip;
-    }
+       Top
+   {
+    //  type              zeroGradient;
+    type slip;
+//     type                pressureDirectedInletOutletVelocity;
+//   // phi                  phi;         
+
+//   // rho                  rho;         
+
+//    inletDirection  uniform (1 0 0);         
+
+//    value               $internalField;
+   }
 }
 
 

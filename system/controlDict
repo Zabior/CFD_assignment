@@ -23,13 +23,13 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         50000;
+endTime         20000;
 
 deltaT          1;
 
 writeControl adjustableRunTime;
 
-writeInterval   50;
+writeInterval   500;
 
 purgeWrite      0;
 
@@ -43,9 +43,6 @@ timePrecision   8;
 
 runTimeModifiable yes;
 
-adjustTimeStep  no;
-
-maxCo           0.1;
 
 
 functions
@@ -55,7 +52,7 @@ functions
         type            fieldAverage;
         libs            (fieldFunctionObjects);
         writeControl    writeTime;
-        timeStart       2000;
+        timeStart       1000;
         log true;
         fields
         (
@@ -69,7 +66,7 @@ functions
             p
             {
                 mean        on;
-                prime2Mean  off;
+                prime2Mean  on;
                 base        time;
             }
             nut
@@ -115,8 +112,9 @@ functions
         pitchAxis   (0 0 1);
         magUInf     0.17748239349298847;
         lRef        1.;
-        Aref        1.;
+        Aref        0.01;
     }
+
     sample
     {
         type            sets;
