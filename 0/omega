@@ -23,7 +23,9 @@ boundaryField
     Inlet
     {
       type              turbulentMixingLengthFrequencyInlet;
-      mixingLength 0.0045;
+      //type turbulentMixingLengthDissipationRateInlet;
+      //mixingLength 0.00045;
+      mixingLength 0.0008216618978461462;
       value        $internalField;
     }
 
@@ -53,7 +55,11 @@ boundaryField
     }
         Top
     {
-        type    slip;
+    //     type              turbulentMixingLengthFrequencyInlet;
+    //   mixingLength 0.0045;
+    //   value        $internalField;
+        //   type              zeroGradient;
+    type slip;
     }
 }
 

@@ -52,7 +52,12 @@ boundaryField
     }
         Top
     {
-        type    slip;
+    //     type             turbulentIntensityKineticEnergyInlet;
+    //   intensity       0.01;
+    //   value       $internalField;
+        type slip;
+    //   type              zeroGradient;
+
     }
 }
 
