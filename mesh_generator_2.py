@@ -73,15 +73,26 @@ radius = d / 2 * (1 + h_over_d)
 gmsh.model.geo.addPoint(center[0] + radius * np.cos(np.pi / 4),
                         center[1] + radius * np.sin(np.pi / 4), center[2], lc, n_points)
 n_points += 1
+offset = 0.5
 
 for i in range(1, 4):
     gmsh.model.geo.addPoint(center[0] + radius * np.cos(i * np.pi / 2 + np.pi / 4),
                             center[1] + radius * np.sin(i * np.pi / 2 + np.pi / 4), center[2], lc, n_points)
-    gmsh.model.geo.addCircleArc(n_points - 1, 1, n_points, n_curves)
+    if i == 1:
+        gmsh.model.geo.addPoint(center[0], center[1] - offset, center[2], lc, 8522)
+        gmsh.model.geo.addCircleArc(n_points - 1, 8522, n_points, n_curves)
+    if i == 2:
+        gmsh.model.geo.addPoint(center[0] + offset, center[1], center[2], lc, 8523)
+        gmsh.model.geo.addCircleArc(n_points - 1, 8523, n_points, n_curves)
+    if i == 3:
+        gmsh.model.geo.addPoint(center[0], center[1] + offset, center[2], lc, 8524)
+        gmsh.model.geo.addCircleArc(n_points - 1, 8524, n_points, n_curves)
+
     n_points += 1
     n_curves += 1
 
-gmsh.model.geo.addCircleArc(n_points - 1, 1, 6, n_curves)
+gmsh.model.geo.addPoint(center[0] - offset, center[1], center[2], lc, 8525)
+gmsh.model.geo.addCircleArc(n_points - 1, 8525, 6, n_curves)
 n_curves += 1
 
 for i in range(4):
@@ -92,7 +103,7 @@ gmsh.model.geo.addPoint(inlet_x, bottom_wall_y, 0, lc, n_points)
 n_points += 1
 gmsh.model.geo.addPoint(inlet_x, center[1] - radius * 0.7, 0, lc, n_points)
 n_points += 1
-gmsh.model.geo.addPoint(center[0] - radius, bottom_wall_y, 0, lc, n_points)
+gmsh.model.geo.addPoint(center[0] - radius * np.cos(3 * np.pi / 2 + np.pi / 3.5), bottom_wall_y, 0, lc, n_points)
 n_points += 1
 gmsh.model.geo.addLine(10, 12, n_curves)
 n_curves += 1
@@ -103,7 +114,7 @@ n_curves += 1
 gmsh.model.geo.addLine(11, 10, n_curves)
 n_curves += 1
 
-gmsh.model.geo.addPoint(center[0] + radius, bottom_wall_y, 0, lc, n_points)
+gmsh.model.geo.addPoint(center[0] + radius * np.cos(3 * np.pi / 2 + np.pi / 3.5), bottom_wall_y, 0, lc, n_points)
 n_points += 1
 gmsh.model.geo.addLine(12, 13, n_curves)
 n_curves += 1
@@ -162,14 +173,14 @@ n_curves += 1
 
 
 # MESHING
-ncyl = 1500
-nrad = 300
-nwall = 500
-nupper = 400
-ninlet = 300
-nwake = 600
+ncyl = 3500
+nrad = 700
+nwall = 1200
+nupper = 800
+ninlet = 1200
+nwake = 1200
 
-refinement = 0.2
+refinement = 0.1
 n_points = int(ncyl / 4 * refinement)
 mesh_type = 'Progression'
 coef = 1.0
@@ -179,7 +190,7 @@ gmsh.model.geo.mesh.setTransfiniteCurve(27, n_points, mesh_type, coef)
 
 n_points = int(ncyl / 4 * refinement)
 mesh_type = 'Progression'
-coef = 1.0
+coef = -1.0
 gmsh.model.geo.mesh.setTransfiniteCurve(3, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(7, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(17, n_points, mesh_type, coef)
@@ -221,7 +232,7 @@ gmsh.model.geo.mesh.setTransfiniteCurve(20, n_points, mesh_type, coef)
 
 n_points = int(nupper * refinement)
 mesh_type = 'Progression'
-coef = -r_from_ymin(ymax_cyl, abs(upper_y - radius), n_points) + 0.005
+coef = -r_from_ymin(ymax_cyl, abs(upper_y - radius), n_points) - 0.005
 gmsh.model.geo.mesh.setTransfiniteCurve(30, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(28, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(26, n_points, mesh_type, coef)
@@ -229,7 +240,7 @@ gmsh.model.geo.mesh.setTransfiniteCurve(24, n_points, mesh_type, 1.0)
 
 n_points = int(ninlet * refinement)
 mesh_type = 'Progression'
-coef = -r_from_ymin(ymax_cyl, abs(inlet_x - radius), n_points) + 0.01
+coef = -r_from_ymin(ymax_cyl, abs(inlet_x - radius), n_points)
 gmsh.model.geo.mesh.setTransfiniteCurve(29, n_points, mesh_type, -coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(31, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(15, n_points, mesh_type, -coef)
@@ -237,7 +248,7 @@ gmsh.model.geo.mesh.setTransfiniteCurve(13, n_points, mesh_type, coef)
 
 n_points = int(nwake * refinement)
 mesh_type = 'Progression'
-coef = -r_from_ymin(ymax_cyl, abs(outlet_x - radius), n_points) + 0.003
+coef = -r_from_ymin(ymax_cyl, abs(outlet_x - radius), n_points) + 0.001
 gmsh.model.geo.mesh.setTransfiniteCurve(25, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(23, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(21, n_points, mesh_type, coef)
@@ -290,7 +301,7 @@ if export_mesh is True:
     for i in range(1, 13):
         dimtags.append((2, i))
 
-    gmsh.model.geo.extrude(dimtags, 0, 0, 1, numElements=[1], recombine=True)
+    gmsh.model.geo.extrude(dimtags, 0, 0, 0.01, numElements=[1], recombine=True)
 
     gmsh.model.geo.addPhysicalGroup(2, [41, 199, 181], 1000, 'Inlet')
     gmsh.model.geo.addPhysicalGroup(2, [177, 159, 137], 1006, 'Top')

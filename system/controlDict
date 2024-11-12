@@ -23,13 +23,13 @@ startTime       0;
 
 stopAt          endTime;
 
-endTime         50000;
+endTime         20000;
 
 deltaT          1;
 
 writeControl adjustableRunTime;
 
-writeInterval   50;
+writeInterval   100;
 
 purgeWrite      0;
 
@@ -106,6 +106,30 @@ functions
         );
         p               p;
         U               U;
+        rho             rhoInf;
+        rhoInf      1;
+
+        CofR        (0 0 0);
+        liftDir     (0 1 0);
+        dragDir     (1 0 0);
+        pitchAxis   (0 0 1);
+        magUInf     0.17748239349298847;
+        lRef        1.;
+        Aref        1.;
+    }
+    forcesMean
+    {
+        type            forceCoeffs;
+        libs            (forces);
+        outputInterval      5;
+        timeStart       2000;
+
+        patches
+        (
+           Cylinder
+        );
+        p               pMean;
+        U               UMean;
         rho             rhoInf;
         rhoInf      1;
 

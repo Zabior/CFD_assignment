@@ -33,13 +33,13 @@ divSchemes
     default         none;
     div(tauMC)      Gauss linear;  //second order
     // div(phi,U)      Gauss vanLeerV;  //second order
-    div(phi,U)      Gauss limitedLinearV 0.3;
+    div(phi,U)      Gauss linear;
 
     div(phi,k)     Gauss limitedLinear 1;  //first-second order
     div(phi,omega)     Gauss limitedLinear 1;  //first-second order
- 
-  div(phiv,p)      Gauss upwind; 
-  div(phid,p)      Gauss vanLeer; //second order
+
+  div(phiv,p)      Gauss linearUpwind grad(p);
+  div(phid,p)      Gauss linearUpwind grad(p); //second order
 
   div(phi,K)      bounded Gauss vanLeer;
   div(phi,e)      bounded Gauss vanLeer;
