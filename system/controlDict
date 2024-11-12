@@ -55,7 +55,7 @@ functions
         type            fieldAverage;
         libs            (fieldFunctionObjects);
         writeControl    writeTime;
-        timeStart       2000;
+        timeStart       200;
         log true;
         fields
         (
@@ -122,7 +122,7 @@ functions
         type            forceCoeffs;
         libs            (forces);
         outputInterval      5;
-        timeStart       2000;
+        timeStart       200;
 
         patches
         (

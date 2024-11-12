@@ -177,7 +177,7 @@ ncyl = 3500
 nrad = 700
 nwall = 1200
 nupper = 800
-ninlet = 1200
+ninlet = 800
 nwake = 1200
 
 refinement = 0.1
@@ -196,8 +196,8 @@ gmsh.model.geo.mesh.setTransfiniteCurve(7, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(17, n_points, mesh_type, coef)
 
 n_points = int(ncyl / 4 * refinement)
-mesh_type = 'Progression'
-coef = 1.0
+mesh_type = 'Bump'
+coef = -0.7
 gmsh.model.geo.mesh.setTransfiniteCurve(32, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(6, n_points, mesh_type, coef)
 gmsh.model.geo.mesh.setTransfiniteCurve(2, n_points, mesh_type, coef)
