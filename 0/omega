@@ -22,11 +22,15 @@ boundaryField
 {
     Inlet
     {
-      type              turbulentMixingLengthFrequencyInlet;
-      //type turbulentMixingLengthDissipationRateInlet;
-      //mixingLength 0.00045;
-      mixingLength 0.0008216618978461462;
-      value        $internalField;
+    //   type              turbulentMixingLengthFrequencyInlet;
+    //   //type turbulentMixingLengthDissipationRateInlet;
+    //   //mixingLength 0.00045;
+    //   mixingLength 0.0008216618978461462;
+    //   value        $internalField;
+
+    type inletOutlet;
+    inletValue $internalField;
+    
     }
 
     Outlet
