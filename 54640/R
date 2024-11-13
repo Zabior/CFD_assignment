@@ -1,0 +1,56 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2006                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volSymmTensorField;
+    location    "0";
+    object      R;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 2 -2 0 0 0 0];  // m^2/s^2
+
+internalField   uniform (3.15e-6 0 0 3.15e-6  0 3.15e-6 );  // Initial guess: isotropic R with a small value
+
+boundaryField
+{
+    Inlet
+    {
+        type            fixedValue;
+        value           $internalField;  // Modify based on physical conditions
+    }
+
+    Outlet
+    {
+        type            zeroGradient;
+    }
+    Side
+    {   
+        type            empty;
+    }
+
+    Cylinder
+    {
+        type            fixedValue;
+        value           uniform (0 0 0 0 0 0);  // Typically, no-slip condition implies R = 0 at walls
+    }
+
+    Wall
+    {
+        type            fixedValue;
+        value           uniform (0 0 0 0 0 0);  // Typically, no-slip condition implies R = 0 at walls
+    }
+    Top {
+    type slip;
+    }
+    
+}
+
+// ************************************************************************* //

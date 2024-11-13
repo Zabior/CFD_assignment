@@ -15,7 +15,7 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-fluxScheme      Kurganov;
+// fluxScheme      Kurganov;
 
 ddtSchemes
 {
@@ -34,7 +34,8 @@ divSchemes
     //div(tauMC)      Gauss linear;  //second order
     // div(phi,U)      Gauss vanLeerV;  //second order
     
-    div(phi,U)      Gauss linearUpwind grad(U);
+     div(phi,U)      Gauss linearUpwind grad(U);
+    //div(phi,U)      Gauss upwind;
 
     //div(phi,k)   Gauss linearUpwind grad(omega);
     //div(phi,omega)     Gauss linearUpwind grad(omega);
@@ -45,25 +46,31 @@ divSchemes
     div(phi,epsilon)     Gauss limitedLinear 1;  //first-second order
  
   div(phiv,p)      Gauss limitedLinear 1; 
-  div(phid,p)      Gauss vanLeer; //second order
+//   div(phid,p)      Gauss vanLeer; //second order
+  div(phid,p)      Gauss limitedLinear 1; //second order
 
-  div(phi,K)      bounded Gauss vanLeer;
-  div(phi,e)      bounded Gauss vanLeer;
-  div(phi,Ekp)    bounded Gauss vanLeer;
-  div(phi,nuTilda) bounded Gauss vanLeer;
+
+//   div(phi,K)      bounded Gauss vanLeer;
+//   div(phi,e)      bounded Gauss vanLeer;
+//   div(phi,Ekp)    bounded Gauss vanLeer;
+//   div(phi,nuTilda) bounded Gauss vanLeer;
+  div(phi,K)      bounded Gauss upwind;
+ div(phi,e)      bounded Gauss upwind;
+  div(phi,Ekp)    bounded Gauss upwind;
+  div(phi,nuTilda) bounded Gauss upwind;
   
 //div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
   div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
     div((rho*R)) Gauss linear;
-  div(phi,R) Gauss linear;
+  div(phi,R) Gauss limitedLinear 1;
   div(phi,Ekp) Gauss linear;
   div(((rho*(thermo:mu|rho))*dev2(T(grad(U))))) Gauss linear;
-  div(R) Gauss linear;
+  div(R) Gauss limitedLinear 1;
 }
 
 laplacianSchemes
 {
-    default         Gauss linear limited 1.0;
+    default         Gauss linear corrected;
 }
 
 interpolationSchemes
