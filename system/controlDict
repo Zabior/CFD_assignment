@@ -19,7 +19,7 @@ application     rhoSimpleFoam;
 
 startFrom       startTime;
 
-startTime       54640;
+startTime       57140;
 
 stopAt          endTime;
 
@@ -81,7 +81,7 @@ functions
                 prime2Mean  off;
                 base        time;
             }
-            k
+            R
             {
                 mean        on;
                 prime2Mean  off;

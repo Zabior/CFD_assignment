@@ -1,0 +1,136 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2406                                  |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    arch        "LSB;label=32;scalar=64";
+    class       dictionary;
+    location    "55140/uniform/functionObjects";
+    object      functionObjectProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+cdf7e925f5746741c316f5fbcf39ad0dfca90775
+{
+    forces
+    {
+        scalar
+        {
+            Cd              0.8633689265662031;
+            CdPressure      0.8523352991203711;
+            CdViscous       0.01103362744583203;
+            CdInternal      0;
+            Cd(f)           0.4295872922947084;
+            Cd(f)Pressure   0.4240900980002749;
+            Cd(f)Viscous    0.005497194294433544;
+            Cd(f)Internal   0;
+            Cd(r)           0.4337816342714947;
+            Cd(r)Pressure   0.4282452011200962;
+            Cd(r)Viscous    0.005536433151398486;
+            Cd(r)Internal   0;
+            Cl              0.419434197678629;
+            ClPressure      0.4155103119821364;
+            ClViscous       0.003923885696492545;
+            ClInternal      0;
+            Cl(f)           0.2099573412413748;
+            Cl(f)Pressure   0.2077551559851488;
+            Cl(f)Viscous    0.002202185256226015;
+            Cl(f)Internal   0;
+            Cl(r)           0.2094768564372542;
+            Cl(r)Pressure   0.2077551559969876;
+            Cl(r)Viscous    0.001721700440266531;
+            Cl(r)Internal   0;
+            CmPitch         0.0002402424020603456;
+            CmPitchPressure -5.91939609111326e-12;
+            CmPitchViscous  0.0002402424079797417;
+            CmPitchInternal 0;
+            CmRoll          -0.002097170988393157;
+            CmRollPressure  -0.002077551559910686;
+            CmRollViscous   -1.961942848247082e-05;
+            CmRollInternal  0;
+            CmYaw           0.004316844632830955;
+            CmYawPressure   0.004261676495601798;
+            CmYawViscous    5.516813722915711e-05;
+            CmYawInternal   0;
+            Cs              -2.289404590765627e-16;
+            CsPressure      -2.351878234928831e-16;
+            CsViscous       6.2473644163204e-18;
+            CsInternal      0;
+            Cs(f)           0.00431684463283084;
+            Cs(f)Pressure   0.00426167649560168;
+            Cs(f)Viscous    5.516813722916024e-05;
+            Cs(f)Internal   0;
+            Cs(r)           -0.00431684463283107;
+            Cs(r)Pressure   -0.004261676495601916;
+            Cs(r)Viscous    -5.516813722915399e-05;
+            Cs(r)Internal   0;
+        }
+    }
+    sample
+    {
+        scalar
+        {
+            average(top,pMean) 0.9875343767368101;
+            min(top,pMean)  0.9791832153505822;
+            max(top,pMean)  1.013527571212684;
+            average(bottom,pMean) 0.9929201398663599;
+            min(bottom,pMean) 0.9818158957288746;
+            max(bottom,pMean) 1.015932067593389;
+            average(pMean)  0.990227258301585;
+            min(pMean)      0.9791832153505822;
+            max(pMean)      1.015932067593389;
+        }
+        label
+        {
+            size(top,pMean) 64;
+            size(bottom,pMean) 64;
+            size(pMean)     128;
+        }
+    }
+}
+
+fieldAverage1
+{
+    U
+    {
+        totalIter       54580;
+        totalTime       54580;
+    }
+    p
+    {
+        totalIter       54580;
+        totalTime       54580;
+    }
+    nut
+    {
+        totalIter       54580;
+        totalTime       54580;
+    }
+    T
+    {
+        totalIter       54580;
+        totalTime       54580;
+    }
+    k
+    {
+        totalIter       54580;
+        totalTime       54580;
+    }
+}
+
+sample
+{
+    pMean
+    {
+        file            "<case>/postProcessing/sample/55140/bottom_pMean.xy";
+    }
+}
+
+
+// ************************************************************************* //

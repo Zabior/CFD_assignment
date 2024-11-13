@@ -34,8 +34,8 @@ divSchemes
     //div(tauMC)      Gauss linear;  //second order
     // div(phi,U)      Gauss vanLeerV;  //second order
     
-     div(phi,U)      Gauss linearUpwind grad(U);
-    //div(phi,U)      Gauss upwind;
+    //  div(phi,U)      Gauss linearUpwind grad(U);
+    div(phi,U)      Gauss upwind;
 
     //div(phi,k)   Gauss linearUpwind grad(omega);
     //div(phi,omega)     Gauss linearUpwind grad(omega);
@@ -43,11 +43,15 @@ divSchemes
     //div(phi,U)      Gauss limitedLinearV 0.3;
 
     //div(phi,k)     Gauss limitedLinear 1;  //first-second order
-    div(phi,epsilon)     Gauss limitedLinear 1;  //first-second order
+    // div(phi,epsilon)     Gauss limitedLinear 1;  //first-second order
+    div(phi,epsilon) Gauss linearUpwind grad(epsilon);
  
-  div(phiv,p)      Gauss limitedLinear 1; 
+  // div(phiv,p)      Gauss limitedLinear 1; 
+  div(phiv,p)      Gauss upwind;
+  div(phid,p) Gauss upwind; 
+
 //   div(phid,p)      Gauss vanLeer; //second order
-  div(phid,p)      Gauss limitedLinear 1; //second order
+  // div(phid,p)      Gauss limitedLinear 1; //second order
 
 
 //   div(phi,K)      bounded Gauss vanLeer;
