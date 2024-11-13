@@ -19,17 +19,18 @@ application     rhoSimpleFoam;
 
 startFrom       startTime;
 
-startTime       0;
+startTime       73140;
 
 stopAt          endTime;
 
-endTime         25000;
+endTime         100000;
 
 deltaT          1;
+//deltaT          0.005;
 
 writeControl adjustableRunTime;
 
-writeInterval   100;
+writeInterval   500;
 
 purgeWrite      0;
 
@@ -52,14 +53,14 @@ functions
         type            fieldAverage;
         libs            (fieldFunctionObjects);
         writeControl    writeTime;
-        timeStart       100;
+        timeStart       1000;
         log true;
         fields
         (
             U
             {
                 mean        on;
-                prime2Mean  off;
+                prime2Mean  on;
                 base        time;
             }
 
@@ -95,7 +96,7 @@ functions
     {
         type            forceCoeffs;
         libs            (forces);
-        outputInterval      0.5;
+        outputInterval      5;
 
         patches
         (

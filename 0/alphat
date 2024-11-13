@@ -24,8 +24,11 @@ boundaryField
 {
     Inlet
     {
- 	type           inletOutlet; 
-      inletValue     $internalField;
+ 	// type           inletOutlet; 
+    //   inletValue     $internalField;
+
+        type calculated;
+    value $internalField;
     }
 
     Side

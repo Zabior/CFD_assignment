@@ -24,8 +24,10 @@ ddtSchemes
 
 gradSchemes
 {
-    // default      leastSquares;
-    default         cellMDLimited Gauss linear 1.0; // second order
+    //default      leastSquares;
+    //default         cellMDLimited Gauss linear 1.0; // second order
+    default         Gauss linear; // second order
+
 }
 
 divSchemes
@@ -34,24 +36,47 @@ divSchemes
     //div(tauMC)      Gauss linear;  //second order
     // div(phi,U)      Gauss vanLeerV;  //second order
     div(phi,U)      Gauss linearUpwind grad(U);
+//    div(phi,U) Gauss upwind;
+    // div(phi,U) Gauss limitedLinearV 1;
 
-    div(phi,k)   Gauss linearUpwind grad(omega);
-    div(phi,omega)     Gauss linearUpwind grad(omega);
+    // div(phi,k)   Gauss linearUpwind grad(omega);
+    // div(phi,omega)     Gauss linearUpwind grad(omega);
+
+    div(phi,k)   Gauss upwind;
+    div(phi,omega)     Gauss upwind;
  
   div(phiv,p)      Gauss limitedLinear 1; 
-  div(phid,p)      Gauss vanLeer; //second order
+//   div(phid,p)      Gauss vanLeer; //second order
+//   div(phiv,p)      Gauss linear; 
 
-  div(phi,K)      bounded Gauss vanLeer;
-  div(phi,e)      bounded Gauss vanLeer;
-  div(phi,Ekp)    bounded Gauss vanLeer;
-  div(phi,nuTilda) bounded Gauss vanLeer;
+
+ div(phid,p)      Gauss limitedLinear 1; //second order
+//   div(phid,p)      Gauss linear; //second order
+
+
+
+//   div(phi,K)      bounded Gauss vanLeer;
+//   div(phi,e)      bounded Gauss vanLeer;
+//   div(phi,Ekp)    bounded Gauss vanLeer;
+//   div(phi,nuTilda) bounded Gauss vanLeer;
+
+//   div(phi,K)      Gauss vanLeer;
+//    div(phi,e)       Gauss vanLeer;
+//   div(phi,Ekp)    Gauss vanLeer;
+//   div(phi,nuTilda) Gauss vanLeer;
+
+  div(phi,K)      bounded Gauss upwind;
+ div(phi,e)      bounded Gauss upwind;
+  div(phi,Ekp)    bounded Gauss upwind;
+  div(phi,nuTilda) bounded Gauss upwind;
   
   div(((rho*nuEff)*dev2(T(grad(U))))) Gauss linear;
 }
 
 laplacianSchemes
 {
-    default         Gauss linear limited 1.0;
+    // default         Gauss linear limited 1.0;
+    default Gauss linear orthogonal;
 }
 
 interpolationSchemes
